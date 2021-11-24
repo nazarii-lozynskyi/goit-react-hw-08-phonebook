@@ -11,16 +11,19 @@ import MyAppBar from './components/MyAppBar';
 
 function App() {
   return (
-    <Container>
+    <>
       <MyAppBar />
-      <Routes>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/registration" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/contacts" element={<ContactsPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Container>
+
+      <Container style={{ maxWidth: '1650px' }}>
+        <Routes>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/registration" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Container>
+    </>
   );
 }
 
