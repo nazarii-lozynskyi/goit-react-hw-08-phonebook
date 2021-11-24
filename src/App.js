@@ -14,9 +14,9 @@ function App() {
     <>
       <MyAppBar />
 
-      <Container style={{ maxWidth: '1650px' }}>
+      <Container style={{ maxWidth: '1650px', paddingBottom: '40px' }}>
         <Routes>
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/registration" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/contacts" element={<ContactsPage />} />
