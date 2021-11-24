@@ -38,18 +38,35 @@ function LoginPage() {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+
+        width: 'fit-content',
+        margin: '0 auto',
+        padding: '20px',
+        marginTop: '40px',
+        border: 1,
+        borderColor: 'primary.main',
+        borderRadius: 2,
+        boxShadow: 4,
+      }}
+    >
       <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
         <TextField
           required
           id="outlined-required"
-          label="email"
+          label="Email"
           defaultValue=""
         />
       </FormControl>
 
       <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
-        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+        <InputLabel required htmlFor="outlined-adornment-password">
+          Password
+        </InputLabel>
         <OutlinedInput
           id="outlined-adornment-password"
           type={values.showPassword ? 'text' : 'password'}
