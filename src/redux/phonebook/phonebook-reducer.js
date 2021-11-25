@@ -1,21 +1,21 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 import {
-  addContactRequest,
-  addContactSuccess,
-  addContactError,
+  addNewContactRequest,
+  addNewContactSuccess,
+  addNewContactError,
   deleteContactRequest,
   deleteContactSuccess,
   deleteContactError,
+  changeFilter,
   fetchContactsRequest,
   fetchContactsSuccess,
   fetchContactsError,
-  changeFilter,
 } from './phonebook-actions';
 
 const items = createReducer([], {
   [fetchContactsSuccess]: (_, { payload }) => payload,
-  [addContactSuccess]: (state, { payload }) => [...state, payload],
+  [addNewContactSuccess]: (state, { payload }) => [...state, payload],
   [deleteContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
 });
@@ -24,9 +24,9 @@ const loading = createReducer(false, {
   [fetchContactsRequest]: () => true,
   [fetchContactsSuccess]: () => false,
   [fetchContactsError]: () => false,
-  [addContactRequest]: () => true,
-  [addContactSuccess]: () => false,
-  [addContactError]: () => false,
+  [addNewContactRequest]: () => true,
+  [addNewContactSuccess]: () => false,
+  [addNewContactError]: () => false,
   [deleteContactRequest]: () => true,
   [deleteContactSuccess]: () => false,
   [deleteContactError]: () => false,
