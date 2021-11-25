@@ -1,36 +1,47 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createSlice } from '@reduxjs/toolkit';
+import authOperations from './auth-operations';
 
-export const phoneBookApi = createApi({
-  reducerPath: 'contactsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://6192c874d3ae6d0017da82bc.mockapi.io/api/v1/',
-  }),
-  tagTypes: ['Contact'],
-  endpoints: builder => ({
-    fetchContacts: builder.query({
-      query: () => '/contacts',
-      providesTags: ['Contact'],
-    }),
-    deleteContact: builder.mutation({
-      query: contactId => ({
-        url: `/contacts/${contactId}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Contact'],
-    }),
-    createContact: builder.mutation({
-      query: contactContent => ({
-        url: '/contacts',
-        method: 'POST',
-        body: contactContent,
-      }),
-      invalidatesTags: ['Contact'],
-    }),
-  }),
+const initialState = {
+  user: { name: null, email: null },
+  token: null,
+  isLoggedIn: false,
+  isFetchingCurrentUser: false,
+};
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  extraReducers: {
+    [authOperations.register.fulfilled](state, action) {
+      state.user = {
+        name: action.payload.user.name,
+        email: action.payload.user.email,
+      };
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    },
+    [authOperations.logIn.fulfilled](state, action) {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    },
+    [authOperations.logOut.fulfilled](state) {
+      state.user = { name: null, email: null };
+      state.token = null;
+      state.isLoggedIn = false;
+    },
+    [authOperations.fetchCurrentUser.pending](state) {
+      state.isFetchingCurrentUser = true;
+    },
+    [authOperations.fetchCurrentUser.fulfilled](state, action) {
+      state.user = action.payload;
+      state.isLoggedIn = true;
+      state.isFetchingCurrentUser = false;
+    },
+    [authOperations.fetchCurrentUser.rejected](state) {
+      state.isFetchingCurrentUser = false;
+    },
+  },
 });
 
-export const {
-  useFetchContactsQuery,
-  useDeleteContactMutation,
-  useCreateContactMutation,
-} = phoneBookApi;
+export default authSlice.reducer;
