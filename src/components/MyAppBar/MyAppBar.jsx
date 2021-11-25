@@ -22,6 +22,7 @@ export default function MyAppBar() {
               maxWidth: '1650px',
               display: 'flex',
               justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
             <Box>
