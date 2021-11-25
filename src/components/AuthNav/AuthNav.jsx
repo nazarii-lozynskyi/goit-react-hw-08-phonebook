@@ -19,8 +19,8 @@ export default function AuthNav() {
     setSelectedIndex(index);
   };
   return (
-    <List component="nav" aria-label="navigation" sx={{ display: 'flex' }}>
-      <Box sx={{ width: '160px' }}>
+    <List component="nav" aria-label="navigation" sx={{}}>
+      <Box sx={{ width: 'fit-content' }}>
         <NavLink
           to={'/login'}
           variant="h6"
@@ -39,7 +39,7 @@ export default function AuthNav() {
         </NavLink>
       </Box>
 
-      <Box sx={{ width: '160px' }}>
+      <Box sx={{ width: 'fit-content' }}>
         <NavLink
           to={'/registration'}
           variant="h6"
