@@ -1,106 +1,109 @@
-import * as React from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import {
-  Box,
-  InputLabel,
-  OutlinedInput,
-  InputAdornment,
-  FormControl,
-  IconButton,
-  TextField,
-  Button,
-} from '@mui/material';
+import { authOperations } from '../../redux/auth';
 
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Box, TextField, Button, FormControl } from '@mui/material';
 
 function RegisterPage() {
-  const [values, setValues] = React.useState({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
-    showPassword: false,
-  });
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
-  const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value });
+  const handleChange = ({ target: { name, value } }) => {
+    switch (name) {
+      case 'name':
+        return setName(value);
+      case 'email':
+        return setEmail(value);
+      case 'password':
+        return setPassword(value);
+      default:
+        return;
+    }
   };
 
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    if (name === '' || email === '' || password === '') {
+      console.log('alert');
+      return;
+    }
+
+    // console.log('submit');
+    dispatch(authOperations.register({ name, email, password }));
+
+    setName('');
+    setEmail('');
+    setPassword('');
   };
 
-  const handleMouseDownPassword = event => {
-    event.preventDefault();
+  const onClick = e => {
+    //console.log('dffgfg');
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
+    <form onSubmit={handleSubmit}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          width: 'fit-content',
+          margin: '0 auto',
+          padding: '20px',
+          marginTop: '40px',
+          border: 1,
+          borderColor: 'primary.main',
+          borderRadius: 2,
+          boxShadow: 4,
+        }}
+      >
+        <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
+          <TextField
+            variant="outlined"
+            id="input-Name"
+            label="Name"
+            name="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+            required
+            value={name}
+            onChange={handleChange}
+          />
+        </FormControl>
 
-        width: 'fit-content',
-        margin: '0 auto',
-        padding: '20px',
-        marginTop: '40px',
-        border: 1,
-        borderColor: 'primary.main',
-        borderRadius: 2,
-        boxShadow: 4,
-      }}
-    >
-      <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
-        <TextField
-          required
-          id="outlined-basic"
-          label="Name"
-          variant="outlined"
-        />
-      </FormControl>
+        <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
+          <TextField
+            onChange={handleChange}
+            required
+            id="outlined-required"
+            name="email"
+            label="Email"
+            value={email}
+          />
+        </FormControl>
 
-      <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
-        <TextField
-          required
-          id="outlined-required"
-          label="Email"
-          defaultValue=""
-        />
-      </FormControl>
+        <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
+          <TextField
+            onChange={handleChange}
+            required
+            id="password"
+            name="password"
+            label="Password"
+            value={password}
+          />
+        </FormControl>
 
-      <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
-        <InputLabel required htmlFor="outlined-adornment-password">
-          Password
-        </InputLabel>
-        <OutlinedInput
-          id="outlined-adornment-password"
-          type={values.showPassword ? 'text' : 'password'}
-          value={values.password}
-          onChange={handleChange('password')}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {values.showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          label="Password"
-        />
-      </FormControl>
-
-      <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
-        <Button variant="outlined">Registration</Button>
-      </FormControl>
-    </Box>
+        <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
+          <Button onClick={onClick} type="submit" variant="outlined">
+            Registration
+          </Button>
+        </FormControl>
+      </Box>
+    </form>
   );
 }
 
