@@ -1,12 +1,36 @@
+import { useDispatch, useSelector } from 'react-redux';
+
+import { authSelectors, authOperations } from '../../redux/auth';
+
 import { Button } from '@mui/material';
 
 import { Logout } from '@mui/icons-material';
 
-export default function UserMenu() {
+function UserMenu() {
+  const dispatch = useDispatch();
+  const name = useSelector(state => authSelectors.getUsername);
+
+  const capitalLetters = name
+    .split(' ')
+    .map(n => n[0])
+    .join('')
+    .toUpperCase();
+
   return (
-    <Button color="inherit" sx={{ p: '8px', marginTop: '8px' }}>
-      Logout{' '}
-      <Logout sx={{ marginLeft: '5px', width: '32px', height: '32px' }} />
-    </Button>
+    <div>
+      <div>{capitalLetters}</div>
+      <span>Welcome, {name ? name : 'User'}!</span>
+      <Button
+        onClick={() => dispatch(authOperations.logOut())}
+        type="button"
+        color="inherit"
+        sx={{ p: '8px', marginTop: '8px' }}
+      >
+        Logout
+        <Logout sx={{ marginLeft: '5px', width: '32px', height: '32px' }} />
+      </Button>
+    </div>
   );
 }
+
+export default UserMenu;
