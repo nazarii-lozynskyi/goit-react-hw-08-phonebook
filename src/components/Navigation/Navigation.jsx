@@ -24,7 +24,7 @@ export default function AuthNav() {
       aria-label="main mailbox folders"
       sx={{ display: 'flex' }}
     >
-      <Box sx={{ width: '160px' }}>
+      <Box sx={{ width: 'fit-content' }}>
         <NavLink
           to={'/'}
           variant="h6"
@@ -43,7 +43,7 @@ export default function AuthNav() {
         </NavLink>
       </Box>
 
-      <Box sx={{ width: '160px' }}>
+      <Box sx={{ width: 'fit-content' }}>
         <NavLink
           to={'/notes'}
           variant="h6"
